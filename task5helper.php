@@ -5,15 +5,26 @@
 
     <style>
 
+        * {
+            font-family:'Calibri', sans-serif;
+        }
+
         #select {
             margin-top: 5%;
-            margin-left: 5%;
+            margin-left: 10%;
+            width: 500px;
+            height: 500px;
+            background-color: #363636;
+            padding: 100px;
+            border-radius: 25px;
+            color: #FFF;
         }
 
         input[type=checkbox] {
             cursor: pointer;
             margin-top: 2%;
             margin-right: 2%;
+            border-radius: 10px;
         }
 
         label {
@@ -22,11 +33,11 @@
 
         button {
             cursor: pointer;
-            margin-top: 3%;
+            margin-top: 5%;
             padding: 14px;
             width: 140px;
-            background-color: #363636;
-            color: white;
+            background-color: #fff;
+            color: #000;
             border: none;
             border-radius: 10px;
             transition: 0.3s ease-in-out;
@@ -34,6 +45,7 @@
 
         button:hover {
             background-color: #653ec2;
+            color: #FFF;
         }
 
         input[type=text] {
@@ -41,7 +53,8 @@
             border-radius: 5px;
             border: 1px solid black;
             cursor: text;
-            margin-top: 2%;
+            margin-top: 4%;
+            margin-bottom: 4%;
         }
 
         #cusdeets, #cuspetdeets {
@@ -86,25 +99,37 @@
     </div>
 
     <script>
+
         function displayOption1() {
+
           var checkBox = document.getElementById("cusrecords");
           var div = document.getElementById("cusdeets");
+
           if (checkBox.checked == true){
             div.style.display = "block";
-          } else {
+          } 
+          
+          else {
             div.style.display = "none";
           }
+
         }
 
         function displayOption2() {
+
           var checkBox = document.getElementById("cuspetrecords");
           var div = document.getElementById("cuspetdeets");
+
           if (checkBox.checked == true){
             div.style.display = "block";
-          } else {
+          }
+           
+          else {
             div.style.display = "none";
           }
+
         }
+
         </script>
 
     </body>
