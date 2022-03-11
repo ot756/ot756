@@ -260,5 +260,62 @@
         }
     ?>
 
+    <?php
+        // First select
+        $sql = "SELECT DISTINCT C.Cus_name, VP.Tele1, VP.Pet_name, VP.Disease_name, 
+        VP.Vacc_name, VP.Vacc_date FROM VacPet AS VP, Pets AS P, Customer AS C  
+        WHERE P.Pet_name=VP.Pet_name AND VP.Tele1=P.Tele1 AND P.Tele1=C.Tele1;";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            echo "<br><br> <table border='1'>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Main Telephone</th>
+                    <th>Pet Name</th>
+                    <th>Disease Name</th>
+                    <th>Vaccination Name</th>
+                    <th>Vaccination Date</th>
+                </tr>";  
+            while($row = mysqli_fetch_array($result)){
+                echo "<tr>";
+                echo "<td>" . $row['Cus_name'] . "</td>";
+                echo "<td>" . $row['Tele1'] . "</td>";
+                echo "<td>" . $row['Pet_name'] . "</td>";
+                echo "<td>" . $row['Disease_name'] . "</td>";
+                echo "<td>" . $row['Vacc_name'] . "</td>";
+                echo "<td>" . $row['Vacc_date'] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+    ?>
+
+    <?php
+        // Second select
+        $sql = "SELECT Vis.Payment, Vis.Cus_name, Vis.Pet_name, Vis.Tele1 FROM Visits 
+        AS Vis, Customer AS C WHERE Vis.Tele1=C.Tele1 AND Vis.Cus_name=C.Cus_name;";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            echo "<br><br> <table border='1'>
+                <tr>
+                    <th>Payment Fee</th>
+                    <th>Customer Name</th>
+                    <th>Pet Name</th>
+                    <th>Main Telephone</th>
+                </tr>";  
+            while($row = mysqli_fetch_array($result)){
+                echo "<tr>";
+                echo "<td>" . $row['Payment'] . "</td>";
+                echo "<td>" . $row['Cus_name'] . "</td>";
+                echo "<td>" . $row['Pet_name'] . "</td>";
+                echo "<td>" . $row['Tele1'] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+    ?>
+
     </body>
 </html>
