@@ -197,3 +197,10 @@ AS subq1, Visits GROUP BY Cus_name;
 
 -- task-4(5)
 SELECT Pet_name FROM Pets WHERE Pet_name NOT IN(SELECT Pet_name FROM Visits);
+
+-- task-4(7)
+SELECT DISTINCT Minf.Cus_name, Minf.Pet_name, IF(P.Cus_name = Minf.Cus_name AND P.Pet_name = Minf.Pet_name, Med_SF_name, "")
+FROM Med_info AS Minf, Pets AS P;
+
+-- task-4(8)
+SELECT Cus_name, Pet_name, COUNT(Pet_name) AS TotalVisits, SUM(payment) FROM Visits GROUP BY Pet_name;
