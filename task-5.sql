@@ -1,5 +1,18 @@
-CREATE DATABASE Project_system;
-USE Project_system;
+-- intitializers
+CREATE DATABASE project_115;
+USE project_115;
+DROP DATABASE project_115;
+DROP TABLE Vaccinated_pet;
+DROP TABLE Vaccination;
+DROP TABLE Disease;
+DROP TABLE Customer;
+DROP TABLE Pets;
+DROP TABLE Visits;
+DROP TABLE Med_info;
+DROP TABLE Medicine;
+DROP TABLE SpecialFood;
+
+-- create table statements
 
 CREATE TABLE Customer(
 Cus_name VARCHAR(100),
@@ -49,7 +62,7 @@ Disease_name VARCHAR(100) PRIMARY KEY,
 Disease_symp VARCHAR(500)
 );
 
-CREATE TABLE VacPet(
+CREATE TABLE Vaccinated_Pet(
 Tele1 VARCHAR(10),
 Pet_name VARCHAR(100),
 Vacc_name VARCHAR(100),
@@ -62,7 +75,7 @@ FOREIGN KEY (Disease_name) REFERENCES Disease(Disease_name),
 FOREIGN KEY (Pet_name) REFERENCES Pets(Pet_name)
 );
 
-CREATE TABLE MedInformation(
+CREATE TABLE Med_Info(
 Cus_name VARCHAR(100),
 Pet_name VARCHAR(100),
 Med_SF_name VARCHAR(100),
@@ -70,134 +83,117 @@ Dosage_freq VARCHAR(100),
 Diagnosis VARCHAR(500),
 Spec_instruc VARCHAR(500),
 Fee INT,
-PRIMARY KEY (Med_name),
+PRIMARY KEY (Med_SF_name),
 FOREIGN KEY (Cus_name) REFERENCES Pets(Cus_name),
-FOREIGN KEY (Pet_name) REFERENCES pets(Pet_name)
+FOREIGN KEY (Pet_name) REFERENCES Pets(Pet_name)
 );
 
-CREATE TABLE medicines(
+CREATE TABLE Medicine(
 Med_name varchar(100) PRIMARY KEY,
 Presc_dosage VARCHAR(100),
-FOREIGN KEY (Med_name) references MedInformation(Med_SF_name)
+FOREIGN KEY (Med_name) references Med_info(Med_SF_name)
 );
 
 CREATE TABLE SpecialFood(
 SF_name VARCHAR(100) PRIMARY KEY,
 Amount VARCHAR(75),
-FOREIGN KEY (SF_name) REFERENCES MedInformation(Med_SF_name)
+FOREIGN KEY (SF_name) REFERENCES Med_info(Med_SF_name)
 );
 
 
+-- insert statements 
 
--- Insert for Customer --
-INSERT INTO Customer VALUES ('Anna','Springs,UAE','0502345645','0566788934');
-INSERT INTO Customer VALUES ('Bob','Arabian Ranches,UAE','0508976767','0507867892');
-INSERT INTO Customer VALUES ('Thomas','Arabian Ranches,UAE','0523039378','0564355628');
-INSERT INTO Customer VALUES ('Sandro','Jumeirah Village Circle, UAE','0502998765','0507776543');
-INSERT INTO Customer VALUES ('Jeremy','Meadows,UAE','0506543749','0503454485');
+INSERT INTO Customer VALUES ('Mary-Jane','Dubai','0555152654','0583267129');
+INSERT INTO Customer VALUES ('om','Abu Dhabi','0562189002','0549322244');
+INSERT INTO Customer VALUES ('bruce','Dubai','0557802525','0589017555');
+INSERT INTO Customer VALUES ('John','Sharjah, UAE','0521809810','0567452190');
+INSERT INTO Customer VALUES ('fred','Ras Al Khaimah','0521909356','0555298009');
 
+INSERT INTO Pets VALUES ('Mary-Jane','Leonardo','0555152654','Black and White','Male','2015-02-12',32,'German Shephard','Dog');
+INSERT INTO Pets VALUES ('Om','Habiba','0562189002','Brown','Female','2016-11-19',18,'Bulldog','Dog');
+INSERT INTO Pets VALUES ('Bruce','Charlie','0557802525','Brown','Male','2017-01-25',8,'persian','Cat');
+INSERT INTO Pets VALUES ('John','Ali','0521809810','Brown','Male','2014-12-28',26,'Labrador','Dog');
+INSERT INTO Pets VALUES ('Om','Ejazz','0562189002','Black','Male','2028-03-07',11,'Siamese','Cat');
+INSERT INTO Pets VALUES ('Fred','Sally','0521909356','White','Female','2016-04-09',9,'Siamese','Cat');
 
--- Insert for Pets --
-INSERT INTO Pets VALUES ('Anna','Max','0502345645','Black','Male','2018-08-31',32,'Labrador','Dog');
-INSERT INTO Pets VALUES ('Bob','Leo','0508976767','Brown and White','Male','2015-01-15',10,'Beagle','Dog');
-INSERT INTO Pets VALUES ('Thomas','Luna','0523039378','Grey','Female','2018-06-11',28,'Greyhound','Dog');
-INSERT INTO Pets VALUES ('Sandro','Abby','0502998765','White','Female','2012-03-01',6,'Ragdoll','Cat');
-INSERT INTO Pets VALUES ('Sandro','Koko','0502998765','White','Male','2020-02-04',7,'Siamese','Cat');
-INSERT INTO Pets VALUES ('Jeremy','Zoe','0506543749','Green','Female','2021-07-25',0.03,'Parrotlet','Bird');
+INSERT INTO Visits VALUES ('Mary-Jane','Leonardo','0555152654',str_to_date("181500", "%H%i%s"),DATE_FORMAT("2021-02-25", "%Y/%m/%d"),'Vaccination',500);
+INSERT INTO Visits VALUES ('Mary-Jane','Leonardo','0555152654',str_to_date("173000", "%H%i%s"),DATE_FORMAT("2021-03-27", "%Y/%m/%d"),'Doctor Visit',300);
+INSERT INTO Visits VALUES ('Om','Habiba','0562189002',str_to_date("161500", "%H%i%s"),DATE_FORMAT("2021-03-11", "%Y/%m/%d"),'Medicine',250);
+INSERT INTO Visits VALUES ('Om','Habiba','0562189002',str_to_date("193000", "%H%i%s"),DATE_FORMAT("2021-07-24", "%Y/%m/%d"),'Doctor Visit',300);
+INSERT INTO Visits VALUES ('Om','Ejazz','0562189002',str_to_date("184500", "%H%i%s"),DATE_FORMAT("2022-01-29", "%Y/%m/%d"),'Medicine',250);
+INSERT INTO Visits VALUES ('John','Ali','0521809810',str_to_date("20000", "%H%i%s"),DATE_FORMAT("2022-02-17", "%Y/%m/%d"),'Special Food',100);
+INSERT INTO Visits VALUES ('John','Ali','0521809810',str_to_date("193000", "%H%i%s"),DATE_FORMAT("2022-04-14", "%Y/%m/%d"),'Doctor Visit',300);
 
+INSERT INTO Vaccination VALUES ('FeLV','Once every year',2);
+INSERT INTO Vaccination VALUES ('FIP','Once every 2 years',3);
+INSERT INTO Vaccination VALUES ('FVRCP','Once every year',2);
+INSERT INTO Vaccination VALUES ('FIV','Once every year',1);
+INSERT INTO Vaccination VALUES ('DA2PP','Once every 3 years',2);
+INSERT INTO Vaccination VALUES ('NOBIVAC','Once every 2 years',2);
+INSERT INTO Vaccination VALUES ('FVRCP-C','Once every year',2);
+INSERT INTO Vaccination VALUES ('DHPP','Once every year',3);
 
--- Insert For Appointment --
-INSERT INTO Appointment VALUES ('Anna','Max','0502345645',str_to_date("193010", "%H%i%s"),DATE_FORMAT("2020-06-15", "%Y/%m/%d"),'Doctor Visit',300);
-INSERT INTO Appointment VALUES ('Anna','Max','0502345645',str_to_date("153510", "%H%i%s"),DATE_FORMAT("2021-06-11", "%Y/%m/%d"),'Vaccination',500);
-INSERT INTO Appointment VALUES ('Bob','Leo','0508976767',str_to_date("124500", "%H%i%s"),DATE_FORMAT("2020-08-21", "%Y/%m/%d"),'Health Check',150);
-INSERT INTO Appointment VALUES ('Bob','Leo','0508976767',str_to_date("170000", "%H%i%s"),DATE_FORMAT("2022-01-05", "%Y/%m/%d"),'Special Food',150);
-INSERT INTO Appointment VALUES ('Sandro','Koko','0502998765',str_to_date("104010", "%H%i%s"),DATE_FORMAT("2022-02-11", "%Y/%m/%d"),'Medicine',250);
-INSERT INTO Appointment VALUES ('Sandro','Abby','0502998765',str_to_date("165010", "%H%i%s"),DATE_FORMAT("2022-03-03", "%Y/%m/%d"),'Vaccination',500);
-INSERT INTO Appointment VALUES ('Sandro','Abby','0502998765',str_to_date("153510", "%H%i%s"),DATE_FORMAT("2022-02-24", "%Y/%m/%d"),'Doctor Visit',300);
+INSERT INTO Disease VALUES ("Hookworms and roundworms", "Skin rash, Coughing and weezing, fever");
+INSERT INTO Disease VALUES ('Salmonella', 'Diarrhea, Fever, Vomiting');
+INSERT INTO Disease VALUES ('Rabies', 'fearfulness, aggression, excessive drooling, difficulty swallowing');
+INSERT INTO Disease VALUES ('Leptospirosis', 'Fever, Vomiting, Abdominal pain, Diarrhea, Refusal to eat.');
+INSERT INTO Disease VALUES ('Bordetella', 'dry hacking cough, watery nasal discharge');
+INSERT INTO Disease VALUES ('Feline Leukaemia', 'Pale gums, Yellow color in the mouth and whites of eyes, Enlarged lymph nodes, Bladder, skin, or upper respiratory infections');
+INSERT INTO Disease VALUES ('Distemper', 'Fever, Nasal discharge, Eye discharge, Lethargy.');
+INSERT INTO Disease VALUES ('Feline herpesvirus type 1', 'conjunctivitis, ocular discharge, sneezing, nasal discharge,');
+INSERT INTO Disease VALUES ('canine parvovirus', 'lethargy, loss of appetite, abdominal pain and bloating');
+INSERT INTO Disease VALUES ('Covid-19', 'Fever, Coughing, Difficulty breathing or shortness of breath, Lethargy, Sneezing.');
 
+INSERT INTO Vaccinated_Pet VALUES ('0555152654','Leonardo','FIV','Hookworms and roundworms',DATE_FORMAT("2020-02-24", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0555152654','Leonardo','FeLV','Salmonella',DATE_FORMAT("2020-05-29", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0521809810','Ali','DA2PP','Leptospirosis',DATE_FORMAT("2021-12-07", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0521809810','Ali','FVRCP-C','Rabies',DATE_FORMAT("2021-02-28", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0562189002','Habiba','NOBIVAC','Feline Leukaemia',DATE_FORMAT("2021-10-13", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0562189002','Habiba','FIP','Bordetella',DATE_FORMAT("2021-12-15", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0562189002','Ejazz','DA2PP','Leptospirosis',DATE_FORMAT("2022-06-03", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0562189002','Ejazz','NOBIVAC','Feline Leukaemia',DATE_FORMAT("2022-12-01", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0562189002','Ejazz','FIV','Hookworms and roundworms',DATE_FORMAT("2022-08-09", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0557802525','Charlie','FVRCP-C','Rabies',DATE_FORMAT("2022-10-21", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0557802525','Charlie','FIP','Salmonella',DATE_FORMAT("2022-05-18", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0557802525','Charlie','DA2PP','Leptospirosis',DATE_FORMAT("2022-08-12", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0521909356','Sally','FIV','Distemper',DATE_FORMAT("2021-12-23", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0521909356','Sally','NOBIVAC','Feline herpesvirus type 1',DATE_FORMAT("2021-06-20", "%Y/%m/%d"));
+INSERT INTO Vaccinated_Pet VALUES ('0521909356','Sally','DHPP','canine parvovirus',DATE_FORMAT("2021-09-10", "%Y/%m/%d"));
 
--- Insert for Vaccination --
-INSERT INTO Vaccination VALUES ('RABVAC','Once every year',1);
-INSERT INTO Vaccination VALUES ('DHPP','Once every 3 years',3);
-INSERT INTO Vaccination VALUES ('DA2PP','Once every year',1);
-INSERT INTO Vaccination VALUES ('FVRCP','Once every 3 years',3);
-INSERT INTO Vaccination VALUES ('FeLV','Once every year',1);
-INSERT INTO Vaccination VALUES ('NOBIVAC','Once every year',1);
-INSERT INTO Vaccination VALUES ('Nystatin','Once every 3 years',3);
+INSERT INTO Med_info VALUES ('John','Ali','Frontline Flea & Tick Spot On Combo For Dogs & Home Protection','Once a day ','Fleas and Ticks','The product should not be used on puppies less than 8 weeks old and/or weighing less than 2kg.',145);
+INSERT INTO Med_info VALUES ('Bruce','Charlie','Beaphar Fiprotec for Cats','Apply once every 4 weeks ','Fleas and Ticks','Part the cat’s fur between the shoulder blades and apply the contents of one pipette to the skin’s surface, ideally split between two areas roughly 2cm apart, one at the base of the head and the second 2-3cm further back. For continuous protection re-apply once every four weeks',95);
+INSERT INTO Med_info VALUES ('Mary-Jane','Leonardo','Beaphar Fiprotec for Dogs','Apply once every 4 weeks','fleas and ticks','Part the dogs’s fur between the shoulder blades and apply the contents of one pipette to the skin’s surface, ideally split between two areas roughly 2cm apart, one at the base of the head and the second 2-3cm further back. For continuous protection re-apply once every four weeks',95);
+INSERT INTO Med_info VALUES ('Fred','Sally','(3 Pack) Pet Pectillin Diarrhea Medication for Dogs and Cats','Once a day for 4 consecutive days','Diarrhea','Add to one meal',200);
+INSERT INTO Med_info VALUES ('Om','Ejazz','NaturVet Cranberry Relief Healthy Urinary Tract', '60 chews,Once a day','bloody urine', 'For use in dogs over the age of 12 weeks',99);
 
+INSERT INTO Medicine VALUES ('Beaphar Fiprotec for Dogs','4 pipettes of 100mg');
+INSERT INTO Medicine VALUES ('Frontline Flea & Tick Spot On Combo For Dogs & Home Protection','3 Pack');
+INSERT INTO Medicine VALUES ('NaturVet Cranberry Relief Healthy Urinary Tract','240 capsules');
+INSERT INTO Medicine VALUES ('Beaphar Fiprotec for Cats','4 pipettes of 50mg');
 
--- Insert for Disease --
-INSERT INTO Disease VALUES ("Rabies", "Flu, weakness, fever, headache");
-INSERT INTO Disease VALUES ('Distemper', 'Fever, nasal and eye discharge, lethargy, sneezing, vomiting');
-INSERT INTO Disease VALUES ('Feline Viral Rhinotracheitis', 'Nasal congestion, excessive eye blinking and squinting, redness around and in the eye');
-INSERT INTO Disease VALUES ('Canine Influenza', 'Loss of appetite, abdominal pain, fever, diarrhea');
-INSERT INTO Disease VALUES ('Candida', 'Excessive shaking of the head, skin rashes and infections,  scratching of the ears or other places on the body');
-INSERT INTO Disease VALUES ('Feline Leukaemia', 'Fever or chills,  Persistent fatigue, Frequent or severe infections');
-INSERT INTO Disease VALUES ('Feline Calicivirus', 'sneezing, nasal congestion, fever');
-INSERT INTO Disease VALUES ('Bordetella', 'Cold temperatures, exposure to dust or cigarette smoke, travel-induced stress');
-INSERT INTO Disease VALUES ('Leptospirosis', 'Muscle aches, vomiting, jaundice (yellow skin and eyes)');
-INSERT INTO Disease VALUES ('polyomavirus', 'anorexia, weight loss, delayed crop emptying, regurgitation, diarrhea, wet droppings');
-INSERT INTO Disease VALUES ('Feline Panleucopaenia', 'vomiting, diarrhoea, anorexia');
-
-
--- Insert for VacPet --
--- Anna's Pet --
-INSERT INTO VacPet VALUES ('0502345645','Max','RABVAC','Rabies',DATE_FORMAT("2021-06-11", "%Y/%m/%d"));
-INSERT INTO VacPet VALUES ('0502345645','Max','DHPP','Distemper',DATE_FORMAT("2020-11-19", "%Y/%m/%d"));
--- Bob's Pet --
-INSERT INTO VacPet VALUES ('0508976767','Leo','DHPP','Distemper',DATE_FORMAT("2020-08-21", "%Y/%m/%d"));
-INSERT INTO VacPet VALUES ('0508976767','Leo','DA2PP','Rabies',DATE_FORMAT("2021-09-27", "%Y/%m/%d"));
--- Sandro's Pet
-INSERT INTO VacPet VALUES ('0502998765','Abby','FVRCP','Feline Viral Rhinotracheitis',DATE_FORMAT("2022-01-21", "%Y/%m/%d"));
-INSERT INTO VacPet VALUES ('0502998765','Abby','FeLV','Feline Leukaemia',DATE_FORMAT("2022-01-21", "%Y/%m/%d"));
-
-INSERT INTO VacPet VALUES ('0502998765','Koko','FVRCP','Feline Viral Rhinotracheitis',DATE_FORMAT("2021-01-31", "%Y/%m/%d"));
-INSERT INTO VacPet VALUES ('0502998765','Koko','FeLV','Feline Calicivirus',DATE_FORMAT("2020-03-11", "%Y/%m/%d"));
-INSERT INTO VacPet VALUES ('0502998765','Koko','FVRCP','Feline Panleucopaenia',DATE_FORMAT("2021-01-31", "%Y/%m/%d"));
-
--- Thomas's Pet --
-INSERT INTO VacPet VALUES ('0523039378','Luna','DHPP','Bordetella',DATE_FORMAT("2021-01-31", "%Y/%m/%d"));
-INSERT INTO VacPet VALUES ('0523039378','Luna','NOBIVAC','Leptospirosis',DATE_FORMAT("2020-03-11", "%Y/%m/%d"));
-INSERT INTO VacPet VALUES ('0523039378','Luna','NOBIVAC','Canine Influenza',DATE_FORMAT("2021-02-26", "%Y/%m/%d"));
-
--- Jeremy's Pet --
-INSERT INTO VacPet VALUES ('0506543749','Zoe','FVRCP','polyomavirus',DATE_FORMAT("2020-05-31", "%Y/%m/%d"));
-INSERT INTO VacPet VALUES ('0506543749','Zoe','Nystatin','candida',DATE_FORMAT("2021-04-30", "%Y/%m/%d"));
--- End Insert for VacPets --
+INSERT INTO SpecialFood VALUES ('NaturVet Cranberry Relief Healthy Urinary Tract', '60 chews');
+INSERT INTO SpecialFood VALUES ('Beaphar Fiprotec for Cats', '50 Soft Chews');
+INSERT INTO SpecialFood VALUES ('Beaphar Fiprotec for Dogs', '160 Soft Chews');
+INSERT INTO SpecialFood VALUES ('Frontline Flea & Tick Spot On Combo For Dogs & Home Protection', '60 Soft Chews');
 
 
--- Insert for MedInformation --
-INSERT INTO MedInformation VALUES ('Anna','Max','Zesty Paws, Probiotic Bites for Dogs','2 per day','Gut Function, Gut Health','y',115);
-INSERT INTO MedInformation VALUES ('Jeremy','Zoe','Beaphar Multi-Vit Parrots Healthcare Supplements','2 per day','General health','',115);
-INSERT INTO MedInformation VALUES ('Thomas','Luna','Beaphar Fiprotec for Dogs','4 pipettes of 100mg','fleas and ticks','Part the dogs’s fur between the shoulder blades and apply the contents of one pipette to the skin’s surface, ideally split between two areas roughly 2cm apart, one at the base of the head and the second 2-3cm further back. For continuous protection re-apply once every four weeks',95);
-INSERT INTO MedInformation VALUES ('Bob','Leo','VetPlus Coatex for Hair and Skin Care for Dogs and Cats in Capsules','1-2 per day','Skin & Coat','Up to 25 lbs, daily amount is 1 Soft Chew, 26-75 lbs, daily amount is 2 Soft Chews, Over 75 lbs, Daily amount is 3 Soft Chews',115);
-INSERT INTO MedInformation VALUES ('Sandro','Koko','Beaphar Fiprotec for Cats','Daily dosage of 1 capsule','Hair loss, dry or reddened skin, dandruff, and flaking','Daily dosage of 1 capsule',64);
-INSERT INTO MedInformation VALUES ('Sandro','Abby','Pet Naturals of Vermont, Daily Probiotic, For Cats','1 per day','Mucosal lining of the urinary tract','Eat 1 per day',45);
+-- task-4(1)
+SELECT DISTINCT C.Cus_name, VP.Tele1, VP.Pet_name, VP.Disease_name, VP.Vacc_name, VP.Vacc_date FROM Vaccinated_pet AS VP, Pets AS P, Customer AS C  
+WHERE P.Pet_name=VP.Pet_name AND VP.Tele1=P.Tele1 AND P.Tele1=C.Tele1;
 
 
--- Insert for Medicine --
-INSERT INTO medicines VALUES ('Beaphar Fiprotec for Dogs','4 pipettes of 100mg');
-INSERT INTO medicines VALUES ('Beaphar Fiprotec for Cats','4 pipettes of 50mg');
-INSERT INTO medicines VALUES ('Beaphar Multi-Vit Parrots Healthcare Supplements','20 ml');
-INSERT INTO medicines VALUES ('VetPlus Coatex for Hair and Skin Care for Dogs and Cats in Capsules','100 grams')
+-- task-4(2)
+SELECT Vis.Payment, Vis.Cus_Name, Vis.Pet_name, Vis.Tele1 FROM Visits AS Vis, Customer AS C WHERE Vis.Tele1=C.Tele1 AND Vis.Cus_name=C.Cus_name;
 
 
--- Insert for Special Food --
-INSERT INTO SpecialFood VALUES ('Zesty Paws, Probiotic Bites for Dogs','90 Soft Chews');
-INSERT INTO SpecialFood VALUES ('Pet Naturals of Vermont, Daily Probiotic, For Cats','30 Soft Chews');
+-- task-4(3)
 
 
--- For testing --
-DROP TABLE VacPet;
-DROP TABLE Vaccination;
-DROP TABLE Disease;
-DROP TABLE Legal_Req;
-DROP TABLE Pets;
-DROP TABLE Customer;
-DROP TABLE Appointment;
-DROP TABLE MedInformation;
-DROP TABLE medicines;
-DROP TABLE SpecialFood;
+-- task-4(4)
+SELECT DISTINCT CN1, PN1, MAX(Count_pets) AS Visit FROM (SELECT Cus_name as CN1,
+Pet_name as PN1, COUNT(Pet_name) AS Count_pets FROM Visits GROUP BY CN1) 
+AS subq1, Visits GROUP BY Cus_name;
 
--- TASK 4: Show all the vaccination records for all pets --
-select v.VName, v.VacFrequency, v.VacDosage, d.DName, lq.Req, p.CName, p.PName, p.CTPrimary, p.Breed, p.Spcs from Vaccination as v, Disease as D, Legal_Req as lq, Pets as p, VacPet as vp;
+
+-- task-4(5)
+SELECT Pet_name FROM Pets WHERE Pet_name NOT IN(SELECT Pet_name FROM Visits);
